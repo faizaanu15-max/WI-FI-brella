@@ -2,17 +2,16 @@
 
 
 
-# [Project Name] 🎯
+# WI-FI-BRELLA 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: Peda Teamsss
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Fidha Ibrahim - Al Azhar College Of Engineering and Technology
+- Member 2: Faiza Gafoor - Al Azhar College Of Engineering and Technology
 
 ### Project Description
 [2-3 lines about what your project does]
