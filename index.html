@@ -2,9 +2,13 @@
 <html>
 <head>
 
-<title>Wi-Fi Umbrella - Voice Rain Hunter</title>
+<title>Wi-Fi Umbrella - Rain Hunter</title>
 
 <style>
+
+/* =====================================================
+   BASIC
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -24,13 +28,20 @@ h1 {
     font-size: 27px;
 }
 
+
+/* =====================================================
+   GAME INFORMATION
+===================================================== */
+
 #info {
     display: flex;
     justify-content: center;
     gap: 25px;
     flex-wrap: wrap;
+
     font-size: 17px;
     font-weight: bold;
+
     margin-bottom: 6px;
 }
 
@@ -40,53 +51,115 @@ h1 {
 }
 
 @keyframes warning {
-    from { transform: scale(1); }
-    to { transform: scale(1.2); }
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+
 }
 
+
+/* =====================================================
+   HEALTH
+===================================================== */
+
 #healthContainer {
+
     width: 300px;
     height: 13px;
+
     margin: 5px auto 8px;
+
     background: #333;
+
     border-radius: 20px;
+
     overflow: hidden;
+
 }
 
 #healthBar {
+
     width: 100%;
     height: 100%;
+
     background: #27ae60;
+
     transition: width .2s;
+
 }
+
+
+/* =====================================================
+   GAME AREA
+===================================================== */
 
 #game {
+
     width: 950px;
     height: 570px;
+
     max-width: 96vw;
+
     margin: auto;
+
     position: relative;
+
     overflow: hidden;
+
     border: 4px solid #111;
+
     border-radius: 12px;
+
     background: #65757d;
+
 }
+
+
+/* =====================================================
+   SKY
+===================================================== */
 
 #sky {
+
     position: absolute;
+
     width: 100%;
     height: 260px;
+
     top: 0;
-    background: linear-gradient(#52636c, #84969d);
+
+    background:
+        linear-gradient(
+            #52636c,
+            #84969d
+        );
+
     z-index: 1;
+
 }
 
+
+/* =====================================================
+   CLOUDS
+===================================================== */
+
 .cloud {
+
     position: absolute;
+
     font-size: 75px;
+
     opacity: .55;
+
     white-space: nowrap;
+
     z-index: 2;
+
 }
 
 #cloud1 {
@@ -104,45 +177,114 @@ h1 {
     left: 850px;
 }
 
+
+/* =====================================================
+   MOVING WORLD
+===================================================== */
+
 #world {
+
     position: absolute;
+
     width: 2500px;
     height: 570px;
+
     left: -700px;
     top: 0;
+
     transition: left .08s linear;
+
     z-index: 3;
+
 }
 
+
+/* =====================================================
+   BUILDINGS
+===================================================== */
+
 .building {
+
     position: absolute;
+
     bottom: 220px;
+
     width: 150px;
+
     background: #6d7377;
+
     border: 3px solid #42484b;
-    box-shadow: inset 0 0 20px rgba(0,0,0,.3);
+
+    box-shadow:
+        inset 0 0 20px rgba(0,0,0,.3);
+
 }
 
 .window {
+
     position: absolute;
+
     width: 28px;
     height: 35px;
+
     background: #9bb3b9;
+
     border: 3px solid #30383b;
+
 }
 
-.b1 { left: 100px; height: 210px; }
-.b2 { left: 420px; height: 170px; background: #77716b; }
-.b3 { left: 800px; height: 230px; background: #646b70; }
-.b4 { left: 1180px; height: 190px; background: #80756c; }
-.b5 { left: 1600px; height: 220px; }
-.b6 { left: 2050px; height: 180px; }
+.b1 {
+    left: 100px;
+    height: 210px;
+}
+
+.b2 {
+    left: 420px;
+    height: 170px;
+    background: #77716b;
+}
+
+.b3 {
+    left: 800px;
+    height: 230px;
+    background: #646b70;
+}
+
+.b4 {
+    left: 1180px;
+    height: 190px;
+    background: #80756c;
+}
+
+.b5 {
+    left: 1600px;
+    height: 220px;
+}
+
+.b6 {
+    left: 2050px;
+    height: 180px;
+}
+
+
+/* =====================================================
+   TREES
+===================================================== */
 
 .tree {
+
     position: absolute;
+
     font-size: 75px;
+
     bottom: 190px;
-    filter: drop-shadow(5px 7px 3px rgba(0,0,0,.35));
+
+    filter:
+        drop-shadow(
+            5px 7px 3px
+            rgba(0,0,0,.35)
+        );
+
 }
 
 .t1 { left: 250px; }
@@ -152,187 +294,474 @@ h1 {
 .t5 { left: 1850px; }
 .t6 { left: 2300px; }
 
+
+/* =====================================================
+   GROUND
+===================================================== */
+
 #ground {
+
     position: absolute;
+
     bottom: 0;
+
     width: 100%;
+
     height: 230px;
-    background: linear-gradient(#3d4a45, #202b29);
+
+    background:
+        linear-gradient(
+            #3d4a45,
+            #202b29
+        );
+
     z-index: 4;
+
 }
+
+
+/* =====================================================
+   ROAD
+===================================================== */
 
 #road {
+
     position: absolute;
+
     bottom: 0;
+
     left: 0;
+
     width: 100%;
+
     height: 160px;
-    background: repeating-linear-gradient(
-        90deg,
-        #343b3e 0px,
-        #343b3e 80px,
-        #3b4245 80px,
-        #3b4245 160px
-    );
+
+    background:
+
+        repeating-linear-gradient(
+            90deg,
+            #343b3e 0px,
+            #343b3e 80px,
+            #3b4245 80px,
+            #3b4245 160px
+        );
+
+    box-shadow:
+        inset 0 15px 25px
+        rgba(255,255,255,.08);
+
 }
+
 
 #roadLine {
+
     position: absolute;
+
     width: 2500px;
+
     height: 6px;
+
     bottom: 75px;
+
     left: 0;
-    background: repeating-linear-gradient(
-        90deg,
-        #d7c35a 0px,
-        #d7c35a 60px,
-        transparent 60px,
-        transparent 110px
-    );
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #d7c35a 0px,
+            #d7c35a 60px,
+            transparent 60px,
+            transparent 110px
+        );
+
 }
+
+
+/* =====================================================
+   ROAD REFLECTIONS
+===================================================== */
 
 .reflection {
+
     position: absolute;
+
     height: 4px;
+
     background: rgba(190,220,230,.22);
+
     border-radius: 50%;
+
     z-index: 5;
+
 }
 
-.r1 { width: 130px; left: 100px; bottom: 35px; }
-.r2 { width: 180px; left: 430px; bottom: 90px; }
-.r3 { width: 90px; left: 800px; bottom: 45px; }
-.r4 { width: 200px; left: 1250px; bottom: 25px; }
-.r5 { width: 120px; left: 1700px; bottom: 70px; }
+.r1 {
+    width: 130px;
+    left: 100px;
+    bottom: 35px;
+}
+
+.r2 {
+    width: 180px;
+    left: 430px;
+    bottom: 90px;
+}
+
+.r3 {
+    width: 90px;
+    left: 800px;
+    bottom: 45px;
+}
+
+.r4 {
+    width: 200px;
+    left: 1250px;
+    bottom: 25px;
+}
+
+.r5 {
+    width: 120px;
+    left: 1700px;
+    bottom: 70px;
+}
+
+
+/* =====================================================
+   PLAYER
+   PERSON + UMBRELLA
+===================================================== */
 
 #player {
+
     position: absolute;
+
     left: 50%;
-    top: 300px;
-    transform: translateX(-50%);
-    font-size: 65px;
+
+    top: 285px;
+
+    transform:
+        translateX(-50%);
+
+    width: 110px;
+
+    height: 135px;
+
     z-index: 30;
-    filter: drop-shadow(5px 7px 4px rgba(0,0,0,.5));
+
+    filter:
+        drop-shadow(
+            5px 7px 4px
+            rgba(0,0,0,.5)
+        );
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
 }
+
+
+/* Umbrella */
+
+.umbrella {
+
+    font-size: 70px;
+
+    line-height: 65px;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* Person */
+
+.character {
+
+    font-size: 50px;
+
+    line-height: 55px;
+
+    margin-top: -2px;
+
+}
+
+
+/* Shadow */
 
 #playerShadow {
+
     position: absolute;
-    width: 70px;
+
+    width: 75px;
+
     height: 18px;
+
     left: 50%;
+
     bottom: 105px;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     border-radius: 50%;
-    background: rgba(0,0,0,.4);
+
+    background:
+        rgba(0,0,0,.4);
+
     z-index: 20;
+
 }
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
 
 #message {
+
     position: absolute;
+
     top: 15px;
+
     left: 50%;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     padding: 11px 25px;
+
     min-width: 330px;
+
     border-radius: 25px;
-    background: rgba(0,0,0,.75);
+
+    background:
+        rgba(0,0,0,.75);
+
     font-size: 17px;
+
     font-weight: bold;
+
     z-index: 50;
+
 }
+
+
+/* =====================================================
+   RAIN
+===================================================== */
 
 .rain {
+
     position: absolute;
+
     width: 2px;
+
     height: 24px;
-    background: linear-gradient(transparent, #d9f4ff);
+
+    background:
+        linear-gradient(
+            transparent,
+            #d9f4ff
+        );
+
     opacity: .8;
+
     z-index: 40;
+
 }
+
+
+/* =====================================================
+   FOG
+===================================================== */
 
 #fog {
+
     position: absolute;
+
     inset: 0;
-    background: radial-gradient(
-        ellipse,
-        rgba(220,235,240,.12),
-        rgba(80,100,110,.45)
-    );
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(220,235,240,.12),
+            rgba(80,100,110,.45)
+        );
+
     pointer-events: none;
+
     z-index: 45;
+
     opacity: 0;
+
     transition: opacity 1s;
+
 }
 
+
+/* =====================================================
+   RAIN ALARM
+===================================================== */
+
 #alarm {
+
     position: absolute;
+
     top: 65px;
+
     left: 50%;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     background: #c62828;
+
     padding: 10px 25px;
+
     border-radius: 10px;
+
     font-weight: bold;
+
     display: none;
+
     z-index: 60;
-    animation: alarmFlash .4s infinite alternate;
+
+    animation:
+        alarmFlash .4s infinite alternate;
+
 }
 
 @keyframes alarmFlash {
-    from { opacity: 1; }
-    to { opacity: .45; }
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: .45;
+    }
+
 }
+
+
+/* =====================================================
+   LIGHTNING
+===================================================== */
 
 #lightning {
+
     position: absolute;
+
     inset: 0;
+
     background: white;
+
     opacity: 0;
+
     z-index: 90;
+
     pointer-events: none;
+
 }
 
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
 #gameOver {
+
     position: absolute;
+
     inset: 0;
-    background: rgba(0,0,0,.88);
+
+    background:
+        rgba(0,0,0,.88);
+
     display: none;
+
     align-items: center;
+
     justify-content: center;
+
     flex-direction: column;
+
     z-index: 100;
+
 }
 
 #gameOver h2 {
+
     font-size: 48px;
+
     margin: 10px;
+
 }
 
 #gameOver p {
+
     font-size: 21px;
+
     line-height: 1.7;
+
 }
 
 button {
+
     padding: 12px 30px;
+
     border: none;
+
     border-radius: 8px;
+
     background: #1976d2;
+
     color: white;
+
     font-size: 18px;
+
     cursor: pointer;
+
 }
 
 button:hover {
+
     background: #0d47a1;
+
+}
+
+
+/* =====================================================
+   VOICE BUTTON
+===================================================== */
+
+#voiceButton {
+
+    margin-top: 7px;
+
+    padding: 7px 15px;
+
+    font-size: 14px;
+
+    background: #444;
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <h1>☂️ Wi-Fi Umbrella — Rain Hunter</h1>
+
 
 <div id="info">
 
@@ -350,192 +779,495 @@ button:hover {
 
 </div>
 
+
 <div id="healthContainer">
+
     <div id="healthBar"></div>
+
 </div>
+
 
 <div id="game">
 
+
+    <!-- SKY -->
+
     <div id="sky"></div>
 
-    <div class="cloud" id="cloud1">☁️☁️</div>
-    <div class="cloud" id="cloud2">☁️☁️☁️</div>
-    <div class="cloud" id="cloud3">☁️☁️</div>
+
+    <!-- CLOUDS -->
+
+    <div class="cloud" id="cloud1">
+        ☁️☁️
+    </div>
+
+    <div class="cloud" id="cloud2">
+        ☁️☁️☁️
+    </div>
+
+    <div class="cloud" id="cloud3">
+        ☁️☁️
+    </div>
+
+
+    <!-- MOVING WORLD -->
 
     <div id="world">
 
+
+        <!-- BUILDING 1 -->
+
         <div class="building b1">
-            <div class="window" style="left:20px;top:30px"></div>
-            <div class="window" style="left:70px;top:30px"></div>
-            <div class="window" style="left:20px;top:90px"></div>
-            <div class="window" style="left:70px;top:90px"></div>
+
+            <div class="window"
+                 style="left:20px;top:30px">
+            </div>
+
+            <div class="window"
+                 style="left:70px;top:30px">
+            </div>
+
+            <div class="window"
+                 style="left:20px;top:90px">
+            </div>
+
+            <div class="window"
+                 style="left:70px;top:90px">
+            </div>
+
         </div>
+
+
+        <!-- BUILDING 2 -->
 
         <div class="building b2">
-            <div class="window" style="left:25px;top:30px"></div>
-            <div class="window" style="left:90px;top:30px"></div>
+
+            <div class="window"
+                 style="left:25px;top:30px">
+            </div>
+
+            <div class="window"
+                 style="left:90px;top:30px">
+            </div>
+
         </div>
+
+
+        <!-- BUILDING 3 -->
 
         <div class="building b3">
-            <div class="window" style="left:20px;top:35px"></div>
-            <div class="window" style="left:75px;top:35px"></div>
-            <div class="window" style="left:20px;top:100px"></div>
-            <div class="window" style="left:75px;top:100px"></div>
+
+            <div class="window"
+                 style="left:20px;top:35px">
+            </div>
+
+            <div class="window"
+                 style="left:75px;top:35px">
+            </div>
+
+            <div class="window"
+                 style="left:20px;top:100px">
+            </div>
+
+            <div class="window"
+                 style="left:75px;top:100px">
+            </div>
+
         </div>
+
+
+        <!-- BUILDING 4 -->
 
         <div class="building b4">
-            <div class="window" style="left:25px;top:35px"></div>
-            <div class="window" style="left:90px;top:35px"></div>
+
+            <div class="window"
+                 style="left:25px;top:35px">
+            </div>
+
+            <div class="window"
+                 style="left:90px;top:35px">
+            </div>
+
         </div>
+
+
+        <!-- BUILDING 5 -->
 
         <div class="building b5">
-            <div class="window" style="left:20px;top:40px"></div>
-            <div class="window" style="left:80px;top:40px"></div>
-            <div class="window" style="left:20px;top:110px"></div>
-            <div class="window" style="left:80px;top:110px"></div>
+
+            <div class="window"
+                 style="left:20px;top:40px">
+            </div>
+
+            <div class="window"
+                 style="left:80px;top:40px">
+            </div>
+
+            <div class="window"
+                 style="left:20px;top:110px">
+            </div>
+
+            <div class="window"
+                 style="left:80px;top:110px">
+            </div>
+
         </div>
+
+
+        <!-- BUILDING 6 -->
 
         <div class="building b6">
-            <div class="window" style="left:30px;top:40px"></div>
-            <div class="window" style="left:90px;top:40px"></div>
+
+            <div class="window"
+                 style="left:30px;top:40px">
+            </div>
+
+            <div class="window"
+                 style="left:90px;top:40px">
+            </div>
+
         </div>
 
+
+        <!-- TREES -->
+
         <div class="tree t1">🌳</div>
+
         <div class="tree t2">🌲</div>
+
         <div class="tree t3">🌳</div>
+
         <div class="tree t4">🌲</div>
+
         <div class="tree t5">🌳</div>
+
         <div class="tree t6">🌲</div>
+
+
+        <!-- GROUND -->
 
         <div id="ground">
 
             <div id="road">
+
                 <div id="roadLine"></div>
 
                 <div class="reflection r1"></div>
+
                 <div class="reflection r2"></div>
+
                 <div class="reflection r3"></div>
+
                 <div class="reflection r4"></div>
+
                 <div class="reflection r5"></div>
+
             </div>
 
         </div>
 
     </div>
 
-    <div id="player">☂️</div>
+
+    <!-- =================================================
+         PLAYER
+    ================================================= -->
+
+    <div id="player">
+
+        <div class="umbrella">
+            ☂️
+        </div>
+
+        <div class="character">
+            🧍‍♂️
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER SHADOW -->
 
     <div id="playerShadow"></div>
 
+
+    <!-- MESSAGE -->
+
     <div id="message">
+
         📡 Searching for hidden Wi-Fi...
+
     </div>
 
+
+    <!-- RAIN ALARM -->
+
     <div id="alarm">
-        🚨 RAIN DETECTED — UMBRELLA ALERT!
+
+        🚨 RAIN DETECTED —
+        UMBRELLA ALERT!
+
     </div>
+
+
+    <!-- FOG -->
 
     <div id="fog"></div>
 
+
+    <!-- LIGHTNING -->
+
     <div id="lightning"></div>
+
+
+    <!-- GAME OVER -->
 
     <div id="gameOver">
 
-        <h2>⏰ TIME UP!</h2>
+        <h2>
+            ⏰ TIME UP!
+        </h2>
 
         <p id="finalScore"></p>
 
         <button onclick="restartGame()">
+
             🔄 PLAY AGAIN
+
         </button>
 
     </div>
 
 </div>
 
+
 <p>
-⬆️ ⬇️ ⬅️ ➡️ Move through the street and search for hidden Wi-Fi
+
+⬆️ ⬇️ ⬅️ ➡️
+Move the character and search for hidden Wi-Fi
+
 </p>
+
+
+<button id="voiceButton" onclick="testVoice()">
+
+🔊 Test Umbrella Voice
+
+</button>
+
 
 <script>
 
-// ======================================
-// VARIABLES
-// ======================================
 
-const game = document.getElementById("game");
-const world = document.getElementById("world");
-const player = document.getElementById("player");
-const message = document.getElementById("message");
-const alarm = document.getElementById("alarm");
-const fog = document.getElementById("fog");
-const lightning = document.getElementById("lightning");
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-const timerText = document.getElementById("timer");
-const scoreText = document.getElementById("score");
-const signalsText = document.getElementById("signals");
-const healthText = document.getElementById("health");
-const healthBar = document.getElementById("healthBar");
+const game =
+document.getElementById("game");
 
-const gameOver = document.getElementById("gameOver");
-const finalScore = document.getElementById("finalScore");
+const world =
+document.getElementById("world");
+
+const player =
+document.getElementById("player");
+
+const message =
+document.getElementById("message");
+
+const alarm =
+document.getElementById("alarm");
+
+const fog =
+document.getElementById("fog");
+
+const lightning =
+document.getElementById("lightning");
+
+const timerText =
+document.getElementById("timer");
+
+const scoreText =
+document.getElementById("score");
+
+const signalsText =
+document.getElementById("signals");
+
+const healthText =
+document.getElementById("health");
+
+const healthBar =
+document.getElementById("healthBar");
+
+const gameOver =
+document.getElementById("gameOver");
+
+const finalScore =
+document.getElementById("finalScore");
+
 
 let playerY = 0;
+
 let worldX = -700;
 
 let score = 0;
+
 let collected = 0;
+
 let health = 100;
+
 let timeLeft = 60;
 
 let running = true;
 
 let rainTimer = 0;
+
 let rainInterval = 90;
 
 let rain = [];
+
 let keys = {};
 
 
-// ======================================
-// VOICE SYSTEM 🗣️
-// ======================================
+/* =====================================================
+   HIDDEN WI-FI LOCATIONS
+===================================================== */
+
+let signals = [
+
+    {
+        x: -400,
+        y: 280,
+        found: false
+    },
+
+    {
+        x: -100,
+        y: 350,
+        found: false
+    },
+
+    {
+        x: 250,
+        y: 240,
+        found: false
+    },
+
+    {
+        x: 600,
+        y: 370,
+        found: false
+    },
+
+    {
+        x: 950,
+        y: 250,
+        found: false
+    },
+
+    {
+        x: 1300,
+        y: 360,
+        found: false
+    },
+
+    {
+        x: 1700,
+        y: 280,
+        found: false
+    },
+
+    {
+        x: 2050,
+        y: 350,
+        found: false
+    },
+
+    {
+        x: 2300,
+        y: 260,
+        found: false
+    }
+
+];
+
+
+/* =====================================================
+   VOICE SYSTEM
+===================================================== */
 
 let lastVoice = "";
 
+
+/*
+   This function makes the umbrella speak.
+*/
+
 function speak(text) {
 
-    // Stop previous voice
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       Stop previous sentence.
+    */
+
     window.speechSynthesis.cancel();
+
 
     let voice =
         new SpeechSynthesisUtterance(text);
 
+
     voice.rate = 1;
+
     voice.pitch = 1.05;
+
     voice.volume = 1;
 
-    // Try to use an English voice
+
+    /*
+       Try to select an English voice.
+    */
+
     let voices =
         window.speechSynthesis.getVoices();
 
+
     let englishVoice =
         voices.find(
-            v => v.lang.startsWith("en")
+            function(v) {
+
+                return v.lang.startsWith("en");
+
+            }
         );
 
+
     if(englishVoice) {
-        voice.voice = englishVoice;
+
+        voice.voice =
+            englishVoice;
+
     }
 
-    window.speechSynthesis.speak(voice);
+
+    window.speechSynthesis.speak(
+        voice
+    );
 
 }
 
 
-// ======================================
-// VOICE DIALOGUES
-// ======================================
+/* =====================================================
+   UMBRELLA DIALOGUES
+===================================================== */
 
 function strongSignalVoice() {
 
@@ -545,6 +1277,7 @@ function strongSignalVoice() {
 
 }
 
+
 function mediumSignalVoice() {
 
     speak(
@@ -552,6 +1285,7 @@ function mediumSignalVoice() {
     );
 
 }
+
 
 function weakSignalVoice() {
 
@@ -561,6 +1295,7 @@ function weakSignalVoice() {
 
 }
 
+
 function noSignalVoice() {
 
     speak(
@@ -568,6 +1303,7 @@ function noSignalVoice() {
     );
 
 }
+
 
 function restoredVoice() {
 
@@ -578,89 +1314,163 @@ function restoredVoice() {
 }
 
 
-// ======================================
-// KEYBOARD
-// ======================================
+/* =====================================================
+   TEST VOICE
+===================================================== */
+
+function testVoice() {
+
+    speak(
+        "Hey! I am your Wi-Fi umbrella. Let's find some internet!"
+    );
+
+}
+
+
+/* =====================================================
+   KEYBOARD
+===================================================== */
 
 document.addEventListener(
-"keydown",
-function(e) {
+    "keydown",
+    function(e) {
 
-    keys[e.key] = true;
+        keys[e.key] = true;
 
-});
+    }
+);
+
 
 document.addEventListener(
-"keyup",
-function(e) {
+    "keyup",
+    function(e) {
 
-    keys[e.key] = false;
+        keys[e.key] = false;
 
-});
+    }
+);
 
 
-// ======================================
-// MOVEMENT
-// ======================================
+/* =====================================================
+   MOVEMENT
+===================================================== */
 
 function movePlayer() {
 
     let moving = false;
 
+
+    /*
+       Move LEFT
+    */
+
     if(keys["ArrowLeft"]) {
 
         worldX += 7;
+
         moving = true;
 
     }
+
+
+    /*
+       Move RIGHT
+    */
 
     if(keys["ArrowRight"]) {
 
         worldX -= 7;
+
         moving = true;
 
     }
+
+
+    /*
+       Move UP
+    */
 
     if(keys["ArrowUp"]) {
 
         playerY -= 5;
+
         moving = true;
 
     }
+
+
+    /*
+       Move DOWN
+    */
 
     if(keys["ArrowDown"]) {
 
         playerY += 5;
+
         moving = true;
 
     }
 
+
+    /*
+       Vertical limits
+    */
+
     playerY =
         Math.max(
             -80,
-            Math.min(80, playerY)
+            Math.min(
+                80,
+                playerY
+            )
         );
+
+
+    /*
+       World limits
+    */
 
     worldX =
         Math.max(
             -1400,
-            Math.min(200, worldX)
+            Math.min(
+                200,
+                worldX
+            )
         );
+
+
+    /*
+       Move world
+    */
 
     world.style.left =
         worldX + "px";
 
+
+    /*
+       Move character
+    */
+
     player.style.top =
-        (300 + playerY) + "px";
+        (285 + playerY) + "px";
+
+
+    /*
+       Small walking movement
+    */
 
     if(moving) {
 
         player.style.transform =
             "translateX(-50%) rotate(" +
-            (Math.random() * 4 - 2) +
+            (
+                Math.random() * 4 - 2
+            ) +
             "deg)";
 
     }
+
     else {
 
         player.style.transform =
@@ -668,49 +1478,47 @@ function movePlayer() {
 
     }
 
+
+    /*
+       Check Wi-Fi
+    */
+
     detectWiFi();
 
 }
 
 
-// ======================================
-// WIFI LOCATIONS
-// ======================================
-
-let signals = [
-
-    {x: -400, y: 280, found:false},
-    {x: -100, y: 350, found:false},
-    {x: 250, y: 240, found:false},
-    {x: 600, y: 370, found:false},
-    {x: 950, y: 250, found:false},
-    {x: 1300, y: 360, found:false},
-    {x: 1700, y: 280, found:false},
-    {x: 2050, y: 350, found:false},
-    {x: 2300, y: 260, found:false}
-
-];
-
-
-// ======================================
-// WIFI DETECTION
-// ======================================
+/* =====================================================
+   WI-FI DETECTION
+===================================================== */
 
 function detectWiFi() {
 
     let closest = null;
-    let closestDistance = Infinity;
+
+    let closestDistance =
+        Infinity;
+
 
     for(let signal of signals) {
+
 
         if(signal.found)
             continue;
 
+
+        /*
+           Convert world position
+           to screen position.
+        */
+
         let screenX =
             signal.x + worldX;
 
+
         let screenY =
             signal.y;
+
 
         let distance =
             Math.sqrt(
@@ -730,7 +1538,15 @@ function detectWiFi() {
 
             );
 
-        if(distance < closestDistance) {
+
+        /*
+           Find closest signal.
+        */
+
+        if(
+            distance <
+            closestDistance
+        ) {
 
             closestDistance =
                 distance;
@@ -740,7 +1556,10 @@ function detectWiFi() {
 
         }
 
-        // SIGNAL FOUND
+
+        /*
+           SIGNAL COLLECTED
+        */
 
         if(distance < 45) {
 
@@ -750,12 +1569,32 @@ function detectWiFi() {
 
             score += 100;
 
+
             message.innerHTML =
-                "🟢 STRONG WI-FI! +100 ⭐";
+                "🟢 STRONG WI-FI FOUND! +100 ⭐";
+
+
+            /*
+               Voice
+            */
 
             strongSignalVoice();
 
+
+            /*
+               Reset voice state
+               for next signal.
+            */
+
+            lastVoice = "";
+
+
             updateUI();
+
+
+            /*
+               Make rain harder.
+            */
 
             rainInterval =
                 Math.max(
@@ -768,69 +1607,112 @@ function detectWiFi() {
     }
 
 
-    // ==================================
-    // VOICE BASED ON DISTANCE
-    // ==================================
+    /*
+       No signal left.
+    */
 
-    if(closest) {
+    if(!closest) {
 
-        if(closestDistance < 90) {
+        message.innerHTML =
+            "🏆 All Wi-Fi signals found!";
 
-            message.innerHTML =
-                "🟢 Strong Wi-Fi detected!";
+        return;
 
-            if(lastVoice !== "strong") {
+    }
 
-                strongSignalVoice();
 
-                lastVoice = "strong";
+    /*
+       STRONG
+    */
 
-            }
+    if(
+        closestDistance < 90
+    ) {
 
-        }
+        message.innerHTML =
+            "🟢 Strong Wi-Fi detected!";
 
-        else if(closestDistance < 180) {
 
-            message.innerHTML =
-                "🟡 Medium Wi-Fi detected...";
+        if(
+            lastVoice !== "strong"
+        ) {
 
-            if(lastVoice !== "medium") {
+            strongSignalVoice();
 
-                mediumSignalVoice();
-
-                lastVoice = "medium";
-
-            }
-
-        }
-
-        else if(closestDistance < 300) {
-
-            message.innerHTML =
-                "🔴 Weak Wi-Fi!";
-
-            if(lastVoice !== "weak") {
-
-                weakSignalVoice();
-
-                lastVoice = "weak";
-
-            }
+            lastVoice = "strong";
 
         }
 
-        else {
+    }
 
-            message.innerHTML =
-                "❌ No Wi-Fi...";
 
-            if(lastVoice !== "none") {
+    /*
+       MEDIUM
+    */
 
-                noSignalVoice();
+    else if(
+        closestDistance < 180
+    ) {
 
-                lastVoice = "none";
+        message.innerHTML =
+            "🟡 Medium Wi-Fi detected...";
 
-            }
+
+        if(
+            lastVoice !== "medium"
+        ) {
+
+            mediumSignalVoice();
+
+            lastVoice = "medium";
+
+        }
+
+    }
+
+
+    /*
+       WEAK
+    */
+
+    else if(
+        closestDistance < 300
+    ) {
+
+        message.innerHTML =
+            "🔴 Weak Wi-Fi!";
+
+
+        if(
+            lastVoice !== "weak"
+        ) {
+
+            weakSignalVoice();
+
+            lastVoice = "weak";
+
+        }
+
+    }
+
+
+    /*
+       NO WI-FI
+    */
+
+    else {
+
+        message.innerHTML =
+            "❌ No Wi-Fi...";
+
+
+        if(
+            lastVoice !== "none"
+        ) {
+
+            noSignalVoice();
+
+            lastVoice = "none";
 
         }
 
@@ -839,27 +1721,37 @@ function detectWiFi() {
 }
 
 
-// ======================================
-// RAIN
-// ======================================
+/* =====================================================
+   CREATE RAIN
+===================================================== */
 
 function createRain() {
 
     let drop =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     drop.className =
         "rain";
 
+
     let rx =
         Math.random() * 950;
 
+
     let ry = -30;
+
 
     drop.style.left =
         rx + "px";
 
-    game.appendChild(drop);
+
+    game.appendChild(
+        drop
+    );
+
 
     rain.push({
 
@@ -870,16 +1762,17 @@ function createRain() {
         y: ry,
 
         speed:
-            7 + Math.random() * 6
+            7 +
+            Math.random() * 6
 
     });
 
 }
 
 
-// ======================================
-// UPDATE RAIN
-// ======================================
+/* =====================================================
+   UPDATE RAIN
+===================================================== */
 
 function updateRain() {
 
@@ -889,23 +1782,39 @@ function updateRain() {
         i--
     ) {
 
-        let r = rain[i];
+        let r =
+            rain[i];
 
-        r.y += r.speed;
+
+        r.y +=
+            r.speed;
+
 
         r.element.style.top =
             r.y + "px";
+
+
+        /*
+           Player center.
+        */
 
         let dx =
             Math.abs(
                 r.x - 475
             );
 
+
         let dy =
             Math.abs(
                 r.y -
                 (300 + playerY)
             );
+
+
+        /*
+           Umbrella protects player
+           if rain is close to umbrella.
+        */
 
         if(
             dx < 45 &&
@@ -914,18 +1823,30 @@ function updateRain() {
 
             health -= 2;
 
+
             message.innerHTML =
                 "💧 You're getting wet!";
 
+
             removeRain(i);
 
+
             updateUI();
+
 
             continue;
 
         }
 
-        if(r.y > 570) {
+
+        /*
+           Remove rain after
+           leaving screen.
+        */
+
+        if(
+            r.y > 570
+        ) {
 
             removeRain(i);
 
@@ -936,28 +1857,34 @@ function updateRain() {
 }
 
 
-// ======================================
-// REMOVE RAIN
-// ======================================
+/* =====================================================
+   REMOVE RAIN
+===================================================== */
 
 function removeRain(i) {
 
     rain[i].element.remove();
 
-    rain.splice(i,1);
+    rain.splice(
+        i,
+        1
+    );
 
 }
 
 
-// ======================================
-// RAIN ALARM
-// ======================================
+/* =====================================================
+   RAIN ALARM
+===================================================== */
 
 function rainAlarm() {
 
     let danger = false;
 
-    for(let r of rain) {
+
+    for(
+        let r of rain
+    ) {
 
         if(
 
@@ -983,6 +1910,7 @@ function rainAlarm() {
 
     }
 
+
     if(danger) {
 
         alarm.style.display =
@@ -1006,30 +1934,48 @@ function rainAlarm() {
 }
 
 
-// ======================================
-// WEATHER
-// ======================================
+/* =====================================================
+   WEATHER
+===================================================== */
 
 function weather() {
+
+
+    /*
+       Move clouds.
+    */
 
     let clouds =
         document.querySelectorAll(
             ".cloud"
         );
 
+
     clouds.forEach(
-        function(cloud, index) {
+        function(
+            cloud,
+            index
+        ) {
 
             let current =
                 parseFloat(
                     cloud.style.left
                 ) || 0;
 
-            current +=
-                .15 + index * .05;
 
-            if(current > 1000)
+            current +=
+                .15 +
+                index * .05;
+
+
+            if(
+                current > 1000
+            ) {
+
                 current = -150;
+
+            }
+
 
             cloud.style.left =
                 current + "px";
@@ -1038,12 +1984,17 @@ function weather() {
     );
 
 
+    /*
+       Lightning.
+    */
+
     if(
         Math.random() < 0.004
     ) {
 
         lightning.style.opacity =
             ".8";
+
 
         setTimeout(
             function() {
@@ -1060,23 +2011,28 @@ function weather() {
 }
 
 
-// ======================================
-// UI
-// ======================================
+/* =====================================================
+   UI
+===================================================== */
 
 function updateUI() {
 
     scoreText.innerHTML =
         score;
 
+
     signalsText.innerHTML =
         collected;
+
 
     healthText.innerHTML =
         Math.max(
             0,
-            Math.floor(health)
+            Math.floor(
+                health
+            )
         );
+
 
     healthBar.style.width =
         Math.max(
@@ -1084,7 +2040,10 @@ function updateUI() {
             health
         ) + "%";
 
-    if(health < 30) {
+
+    if(
+        health < 30
+    ) {
 
         healthBar.style.background =
             "#e53935";
@@ -1094,52 +2053,76 @@ function updateUI() {
 }
 
 
-// ======================================
-// TIMER
-// ======================================
+/* =====================================================
+   TIMER
+===================================================== */
 
 setInterval(
-function() {
+    function() {
+
+        if(!running)
+            return;
+
+
+        timeLeft--;
+
+
+        timerText.innerHTML =
+            timeLeft;
+
+
+        if(
+            timeLeft <= 10
+        ) {
+
+            timerText.classList.add(
+                "warning"
+            );
+
+        }
+
+
+        if(
+            timeLeft <= 0
+        ) {
+
+            endGame();
+
+        }
+
+    },
+    1000
+);
+
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
+function endGame() {
 
     if(!running)
         return;
 
-    timeLeft--;
-
-    timerText.innerHTML =
-        timeLeft;
-
-    if(timeLeft <= 10) {
-
-        timerText.classList.add(
-            "warning"
-        );
-
-    }
-
-    if(timeLeft <= 0) {
-
-        endGame();
-
-    }
-
-},
-1000);
-
-
-// ======================================
-// GAME OVER
-// ======================================
-
-function endGame() {
 
     running = false;
 
+
+    /*
+       Stop current voice.
+    */
+
     window.speechSynthesis.cancel();
+
+
+    /*
+       Game-over voice.
+    */
 
     speak(
         "Game over! You survived the Wi-Fi hunt."
     );
+
 
     finalScore.innerHTML =
 
@@ -1152,8 +2135,11 @@ function endGame() {
         "<br>❤️ Health: " +
         Math.max(
             0,
-            Math.floor(health)
+            Math.floor(
+                health
+            )
         );
+
 
     gameOver.style.display =
         "flex";
@@ -1161,9 +2147,9 @@ function endGame() {
 }
 
 
-// ======================================
-// RESTART
-// ======================================
+/* =====================================================
+   RESTART
+===================================================== */
 
 function restartGame() {
 
@@ -1172,18 +2158,29 @@ function restartGame() {
 }
 
 
-// ======================================
-// MAIN LOOP
-// ======================================
+/* =====================================================
+   MAIN GAME LOOP
+===================================================== */
 
 function gameLoop() {
 
     if(!running)
         return;
 
+
+    /*
+       Move character.
+    */
+
     movePlayer();
 
+
+    /*
+       Rain timer.
+    */
+
     rainTimer++;
+
 
     if(
         rainTimer >=
@@ -1196,13 +2193,35 @@ function gameLoop() {
 
     }
 
+
+    /*
+       Update rain.
+    */
+
     updateRain();
+
+
+    /*
+       Rain warning.
+    */
 
     rainAlarm();
 
+
+    /*
+       Weather.
+    */
+
     weather();
 
-    if(health <= 0) {
+
+    /*
+       Health reaches zero.
+    */
+
+    if(
+        health <= 0
+    ) {
 
         endGame();
 
@@ -1210,11 +2229,21 @@ function gameLoop() {
 
     }
 
+
+    /*
+       Continue game.
+    */
+
     requestAnimationFrame(
         gameLoop
     );
 
 }
+
+
+/* =====================================================
+   START GAME
+===================================================== */
 
 updateUI();
 
