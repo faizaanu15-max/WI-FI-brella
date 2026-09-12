@@ -1,192 +1,1326 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Wi-Fi-brella</title>
+<title>Wi-Fi-brella: Hidden Signal Challenge</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #dff6ff;
-            text-align: center;
-            overflow: hidden;
-        }
+<style>
 
-        h1 {
-            margin: 15px;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        #game {
-            width: 900px;
-            height: 550px;
-            margin: auto;
-            position: relative;
-            background: #8fd694;
-            border: 5px solid #222;
-            overflow: hidden;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #101827;
+    color: white;
+    text-align: center;
+}
 
-        #player {
-            position: absolute;
-            font-size: 55px;
-            left: 420px;
-            top: 250px;
-        }
+h1 {
+    margin: 10px;
+    font-size: 28px;
+}
 
-        .tree {
-            position: absolute;
-            font-size: 50px;
-        }
+#info {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 8px;
+}
 
-        #tree1 { left: 100px; top: 100px; }
-        #tree2 { left: 700px; top: 80px; }
-        #tree3 { left: 200px; top: 400px; }
-        #tree4 { left: 750px; top: 400px; }
+#game {
+    width: 900px;
+    height: 550px;
+    max-width: 95vw;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
 
-        .signal {
-            position: absolute;
-            font-size: 35px;
-        }
+    border: 5px solid #111;
+    border-radius: 12px;
 
-        #s1 { left: 250px; top: 150px; }
-        #s2 { left: 600px; top: 250px; }
-        #s3 { left: 350px; top: 420px; }
+    background:
+        linear-gradient(
+            #6eb5d9 0%,
+            #9bd29a 55%,
+            #4c8b4f 56%,
+            #315f35 100%
+        );
+}
 
-        #message {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 12px 25px;
-            border-radius: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
+/* SKY CLOUDS */
 
-        #score {
-            font-size: 22px;
-            margin: 10px;
-        }
+.cloud {
+    position: absolute;
+    font-size: 65px;
+    opacity: 0.65;
+    z-index: 1;
+}
 
-        #instructions {
-            font-size: 18px;
-        }
-    </style>
+#cloud1 {
+    left: 80px;
+    top: 30px;
+}
+
+#cloud2 {
+    right: 100px;
+    top: 70px;
+}
+
+#cloud3 {
+    left: 400px;
+    top: 20px;
+}
+
+
+/* TREES */
+
+.tree {
+    position: absolute;
+    font-size: 55px;
+    z-index: 3;
+}
+
+#tree1 {
+    left: 60px;
+    top: 100px;
+}
+
+#tree2 {
+    right: 60px;
+    top: 130px;
+}
+
+#tree3 {
+    left: 120px;
+    bottom: 30px;
+}
+
+#tree4 {
+    right: 120px;
+    bottom: 30px;
+}
+
+
+/* PLAYER */
+
+#player {
+    position: absolute;
+
+    font-size: 58px;
+
+    left: 420px;
+    top: 250px;
+
+    z-index: 20;
+
+    transition: transform 0.08s;
+}
+
+
+/* HIDDEN SIGNAL */
+
+.signal {
+    position: absolute;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    z-index: 5;
+}
+
+
+/* SIGNAL DISCOVERY EFFECT */
+
+.signal.detected {
+    animation: pulse 0.5s infinite alternate;
+}
+
+@keyframes pulse {
+
+    from {
+        box-shadow: 0 0 5px #00ff88;
+    }
+
+    to {
+        box-shadow: 0 0 25px #00ff88;
+    }
+
+}
+
+
+/* MESSAGE */
+
+#message {
+
+    position: absolute;
+
+    top: 15px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(0,0,0,0.75);
+
+    padding: 12px 25px;
+
+    border-radius: 25px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    z-index: 50;
+
+    min-width: 300px;
+}
+
+
+/* ALARM */
+
+#alarm {
+
+    position: absolute;
+
+    top: 70px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: #d00000;
+
+    padding: 10px 25px;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    display: none;
+
+    z-index: 60;
+
+    animation: alarm 0.4s infinite alternate;
+}
+
+@keyframes alarm {
+
+    from {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+
+    to {
+        opacity: 0.5;
+        transform: translateX(-50%) scale(1.08);
+    }
+
+}
+
+
+/* RAIN */
+
+.rain {
+
+    position: absolute;
+
+    width: 2px;
+    height: 18px;
+
+    background: #d7f3ff;
+
+    z-index: 15;
+
+}
+
+
+/* LIGHTNING */
+
+#lightning {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: white;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 80;
+}
+
+
+/* POWERUP */
+
+.powerup {
+
+    position: absolute;
+
+    font-size: 30px;
+
+    z-index: 12;
+
+    animation: power 0.7s infinite alternate;
+}
+
+@keyframes power {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.3);
+    }
+
+}
+
+
+/* PROGRESS BAR */
+
+#healthContainer {
+
+    width: 300px;
+
+    height: 15px;
+
+    margin: 8px auto;
+
+    background: #333;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+#healthBar {
+
+    width: 100%;
+
+    height: 100%;
+
+    background: #20c997;
+
+    transition: width 0.2s;
+}
+
+
+/* GAME OVER */
+
+#gameOver {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.88);
+
+    display: none;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 100;
+}
+
+#gameOver h2 {
+
+    font-size: 50px;
+
+    margin: 10px;
+}
+
+#gameOver p {
+
+    font-size: 22px;
+
+    line-height: 1.8;
+}
+
+button {
+
+    padding: 12px 30px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2196f3;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+
+    background: #1565c0;
+
+}
+
+
+/* TIMER WARNING */
+
+.warning {
+
+    color: #ff3333;
+
+    animation: timerFlash 0.5s infinite alternate;
+}
+
+@keyframes timerFlash {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-<h1>☂️ Wi-Fi Umbrella: Signal Hunter</h1>
+<h1>☂️ Wi-Fi Umbrella: Hidden Signal Challenge</h1>
 
-<div id="score">Score: 0</div>
 
-<div id="instructions">
-    Use ⬆️ ⬇️ ⬅️ ➡️ keys to move the umbrella
+<div id="info">
+
+    <div>⏱️ Time: <span id="timer">60</span></div>
+
+    <div>⭐ Score: <span id="score">0</span></div>
+
+    <div>📡 Signals: <span id="signals">0</span></div>
+
+    <div>🏆 Best: <span id="best">0</span></div>
+
 </div>
+
+
+<div id="healthContainer">
+
+    <div id="healthBar"></div>
+
+</div>
+
 
 <div id="game">
 
-    <div id="message">Searching for signal...</div>
 
-    <div id="player">☂️</div>
+    <!-- WEATHER -->
+
+    <div class="cloud" id="cloud1">☁️</div>
+
+    <div class="cloud" id="cloud2">☁️</div>
+
+    <div class="cloud" id="cloud3">☁️</div>
+
+
+    <!-- MESSAGE -->
+
+    <div id="message">
+        📡 Searching for hidden Wi-Fi...
+    </div>
+
+
+    <!-- RAIN ALARM -->
+
+    <div id="alarm">
+        🚨 RAIN DETECTED!
+    </div>
+
+
+    <!-- PLAYER -->
+
+    <div id="player">
+        ☂️
+    </div>
+
+
+    <!-- TREES -->
 
     <div class="tree" id="tree1">🌳</div>
+
     <div class="tree" id="tree2">🌳</div>
+
     <div class="tree" id="tree3">🌳</div>
+
     <div class="tree" id="tree4">🌳</div>
 
-    <div class="signal" id="s1">📶</div>
-    <div class="signal" id="s2">📶</div>
-    <div class="signal" id="s3">📶</div>
+
+    <!-- HIDDEN WIFI SIGNALS -->
+
+    <div class="signal" id="s1"></div>
+
+    <div class="signal" id="s2"></div>
+
+    <div class="signal" id="s3"></div>
+
+    <div class="signal" id="s4"></div>
+
+    <div class="signal" id="s5"></div>
+
+    <div class="signal" id="s6"></div>
+
+
+    <!-- LIGHTNING -->
+
+    <div id="lightning"></div>
+
+
+    <!-- GAME OVER -->
+
+    <div id="gameOver">
+
+        <h2>⏰ TIME UP!</h2>
+
+        <p id="finalScore"></p>
+
+        <button onclick="restartGame()">
+            🔄 Play Again
+        </button>
+
+    </div>
 
 </div>
 
+
+<p>
+⬆️ ⬇️ ⬅️ ➡️ Move &nbsp; |
+&nbsp; 🔎 Search for hidden Wi-Fi &nbsp; |
+&nbsp; ☂️ Stay alert for rain!
+</p>
+
+
 <script>
 
-let player = document.getElementById("player");
-let message = document.getElementById("message");
-let scoreText = document.getElementById("score");
+
+// ======================================
+// GAME VARIABLES
+// ======================================
+
+const player =
+document.getElementById("player");
+
+const game =
+document.getElementById("game");
+
+const message =
+document.getElementById("message");
+
+const alarm =
+document.getElementById("alarm");
+
+const timerText =
+document.getElementById("timer");
+
+const scoreText =
+document.getElementById("score");
+
+const signalsText =
+document.getElementById("signals");
+
+const healthBar =
+document.getElementById("healthBar");
+
+const gameOverScreen =
+document.getElementById("gameOver");
+
+const finalScore =
+document.getElementById("finalScore");
+
+const lightning =
+document.getElementById("lightning");
+
 
 let x = 420;
+
 let y = 250;
+
 let score = 0;
 
+let collected = 0;
+
+let health = 100;
+
+let timeLeft = 60;
+
+let gameRunning = true;
+
+let speed = 12;
+
+let rainTimer = 0;
+
+let rainInterval = 100;
+
+let rain = [];
+
+let keys = {};
+
+
+// ======================================
+// HIDDEN WIFI LOCATIONS
+// ======================================
+
 let signals = [
-    {x:250, y:150},
-    {x:600, y:250},
-    {x:350, y:420}
+
+    {
+        id: "s1",
+        x: 150,
+        y: 170,
+        collected: false
+    },
+
+    {
+        id: "s2",
+        x: 730,
+        y: 180,
+        collected: false
+    },
+
+    {
+        id: "s3",
+        x: 300,
+        y: 390,
+        collected: false
+    },
+
+    {
+        id: "s4",
+        x: 600,
+        y: 400,
+        collected: false
+    },
+
+    {
+        id: "s5",
+        x: 470,
+        y: 100,
+        collected: false
+    },
+
+    {
+        id: "s6",
+        x: 800,
+        y: 330,
+        collected: false
+    }
+
 ];
 
-document.addEventListener("keydown", function(event) {
 
-    let speed = 15;
+// ======================================
+// KEYBOARD
+// ======================================
 
-    if(event.key === "ArrowUp") {
-        y -= speed;
-    }
+document.addEventListener(
+"keydown",
+function(event) {
 
-    if(event.key === "ArrowDown") {
-        y += speed;
-    }
+    keys[event.key] = true;
 
-    if(event.key === "ArrowLeft") {
-        x -= speed;
-    }
-
-    if(event.key === "ArrowRight") {
-        x += speed;
-    }
-
-    // Keep player inside game
-    if(x < 0) x = 0;
-    if(y < 0) y = 0;
-
-    if(x > 840) x = 840;
-    if(y > 490) y = 490;
-
-    player.style.left = x + "px";
-    player.style.top = y + "px";
-
-    checkSignal();
 });
 
 
-function checkSignal() {
+document.addEventListener(
+"keyup",
+function(event) {
 
-    let found = false;
+    keys[event.key] = false;
 
-    for(let i = 0; i < signals.length; i++) {
+});
+
+
+// ======================================
+// PLAYER MOVEMENT
+// ======================================
+
+function movePlayer() {
+
+    if(keys["ArrowUp"]) {
+
+        y -= speed;
+
+        player.style.transform =
+        "rotate(-5deg)";
+
+    }
+
+    if(keys["ArrowDown"]) {
+
+        y += speed;
+
+        player.style.transform =
+        "rotate(5deg)";
+
+    }
+
+    if(keys["ArrowLeft"]) {
+
+        x -= speed;
+
+    }
+
+    if(keys["ArrowRight"]) {
+
+        x += speed;
+
+    }
+
+
+    // Boundaries
+
+    x = Math.max(10, Math.min(840, x));
+
+    y = Math.max(100, Math.min(480, y));
+
+
+    player.style.left =
+    x + "px";
+
+    player.style.top =
+    y + "px";
+
+
+    detectSignals();
+
+}
+
+
+// ======================================
+// HIDDEN SIGNAL DETECTION
+// ======================================
+
+function detectSignals() {
+
+    let closest = null;
+
+    let closestDistance = Infinity;
+
+
+    for(let signal of signals) {
+
+        if(signal.collected)
+            continue;
+
 
         let distance = Math.sqrt(
-            Math.pow(x - signals[i].x, 2) +
-            Math.pow(y - signals[i].y, 2)
+
+            Math.pow(
+                x - signal.x,
+                2
+            )
+
+            +
+
+            Math.pow(
+                y - signal.y,
+                2
+            )
+
         );
 
-        if(distance < 80) {
 
-            found = true;
+        if(distance < closestDistance) {
 
-            if(distance < 35) {
-                message.innerHTML = "🟢 GOOD SIGNAL! +10";
-                score += 10;
-            }
-            else {
-                message.innerHTML = "🟡 WEAK SIGNAL!";
-            }
+            closestDistance =
+            distance;
 
-            scoreText.innerHTML = "Score: " + score;
+            closest =
+            signal;
+
+        }
+
+
+        // COLLECT
+
+        if(distance < 35) {
+
+            collectSignal(signal);
+
+            return;
+
+        }
+
+    }
+
+
+    // HIDDEN SIGNAL FEEDBACK
+
+    if(closest) {
+
+        if(closestDistance < 80) {
+
+            message.innerHTML =
+            "📶 Signal detected nearby...";
+
+        }
+
+        else if(closestDistance < 150) {
+
+            message.innerHTML =
+            "🔎 Very weak signal... Keep searching.";
+
+        }
+
+        else {
+
+            message.innerHTML =
+            "📡 Searching for hidden Wi-Fi...";
+
+        }
+
+    }
+
+}
+
+
+// ======================================
+// COLLECT SIGNAL
+// ======================================
+
+function collectSignal(signal) {
+
+    signal.collected = true;
+
+
+    document.getElementById(
+        signal.id
+    ).style.display = "none";
+
+
+    collected++;
+
+    score += 100;
+
+
+    message.innerHTML =
+    "🟢 SIGNAL FOUND! +100 ⭐";
+
+
+    signalsText.innerHTML =
+    collected;
+
+
+    scoreText.innerHTML =
+    score;
+
+
+    // Make rain more frequent
+
+    rainInterval -= 8;
+
+    if(rainInterval < 35)
+        rainInterval = 35;
+
+
+    // Spawn powerup
+
+    if(collected % 2 === 0) {
+
+        spawnPowerUp();
+
+    }
+
+}
+
+
+// ======================================
+// POWER UP
+// ======================================
+
+function spawnPowerUp() {
+
+    let power =
+    document.createElement("div");
+
+    power.className =
+    "powerup";
+
+    power.innerHTML =
+    "⚡";
+
+
+    let px =
+    50 + Math.random() * 780;
+
+    let py =
+    120 + Math.random() * 330;
+
+
+    power.style.left =
+    px + "px";
+
+    power.style.top =
+    py + "px";
+
+
+    game.appendChild(power);
+
+
+    let check =
+    setInterval(function() {
+
+        if(!gameRunning) {
+
+            clearInterval(check);
+
+            return;
+
+        }
+
+
+        let distance =
+        Math.sqrt(
+
+            Math.pow(
+                x - px,
+                2
+            )
+
+            +
+
+            Math.pow(
+                y - py,
+                2
+            )
+
+        );
+
+
+        if(distance < 45) {
+
+            score += 50;
+
+            speed = 20;
+
+
+            message.innerHTML =
+            "⚡ SPEED BOOST! +50";
+
+
+            power.remove();
+
+            clearInterval(check);
+
+
+            setTimeout(function() {
+
+                speed = 12;
+
+            }, 5000);
+
+        }
+
+    }, 50);
+
+}
+
+
+// ======================================
+// CREATE RAIN
+// ======================================
+
+function createRain() {
+
+    let drop =
+    document.createElement("div");
+
+    drop.className =
+    "rain";
+
+
+    let rx =
+    Math.random() * 890;
+
+
+    drop.style.left =
+    rx + "px";
+
+
+    game.appendChild(drop);
+
+
+    rain.push({
+
+        element: drop,
+
+        x: rx,
+
+        y: -20,
+
+        speed:
+        5 + Math.random() * 5
+
+    });
+
+}
+
+
+// ======================================
+// UPDATE RAIN
+// ======================================
+
+function updateRain() {
+
+    for(
+        let i = rain.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        let r = rain[i];
+
+
+        r.y += r.speed;
+
+
+        r.element.style.top =
+        r.y + "px";
+
+
+        let distance =
+        Math.sqrt(
+
+            Math.pow(
+                r.x - x,
+                2
+            )
+
+            +
+
+            Math.pow(
+                r.y - y,
+                2
+            )
+
+        );
+
+
+        if(distance < 45) {
+
+            health -= 2;
+
+
+            updateHealth();
+
+
+            r.element.remove();
+
+            rain.splice(i,1);
+
+            continue;
+
+        }
+
+
+        if(r.y > 550) {
+
+            r.element.remove();
+
+            rain.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+// ======================================
+// RAIN DETECTION ALARM
+// ======================================
+
+function rainAlarm() {
+
+    let danger = false;
+
+
+    for(let r of rain) {
+
+        if(
+
+            Math.abs(r.x - x)
+            < 100
+
+            &&
+
+            r.y > 0
+
+            &&
+
+            r.y < 170
+
+        ) {
+
+            danger = true;
 
             break;
+
         }
+
     }
 
-    if(!found) {
-        message.innerHTML = "🔴 NO SIGNAL! Keep searching...";
+
+    if(danger) {
+
+        alarm.style.display =
+        "block";
+
+
+        message.innerHTML =
+        "🚨 UMBRELLA ALERT: RAIN INCOMING!";
+
+
+        // small score for correctly reacting
+
+        score += 1;
+
     }
+
+    else {
+
+        alarm.style.display =
+        "none";
+
+    }
+
 }
+
+
+// ======================================
+// HEALTH
+// ======================================
+
+function updateHealth() {
+
+    healthBar.style.width =
+    Math.max(0, health) + "%";
+
+
+    if(health < 30) {
+
+        healthBar.style.background =
+        "#ff3333";
+
+        message.innerHTML =
+        "⚠️ YOU ARE GETTING SOAKED!";
+
+    }
+
+}
+
+
+// ======================================
+// LIGHTNING EFFECT
+// ======================================
+
+function lightningFlash() {
+
+    if(Math.random() < 0.01) {
+
+        lightning.style.opacity =
+        "0.8";
+
+
+        setTimeout(function() {
+
+            lightning.style.opacity =
+            "0";
+
+        }, 100);
+
+    }
+
+}
+
+
+// ======================================
+// TIMER
+// ======================================
+
+setInterval(function() {
+
+    if(!gameRunning)
+        return;
+
+
+    timeLeft--;
+
+
+    timerText.innerHTML =
+    timeLeft;
+
+
+    if(timeLeft <= 10) {
+
+        timerText.classList.add(
+            "warning"
+        );
+
+    }
+
+
+    if(timeLeft <= 0) {
+
+        endGame();
+
+    }
+
+}, 1000);
+
+
+// ======================================
+// GAME OVER
+// ======================================
+
+function endGame() {
+
+    gameRunning = false;
+
+
+    alarm.style.display =
+    "none";
+
+
+    finalScore.innerHTML =
+
+    "⭐ Score: " + score +
+
+    "<br>📡 Signals Found: "
+    + collected +
+
+    "<br>❤️ Health: "
+    + Math.max(0, health);
+
+
+    gameOverScreen.style.display =
+    "flex";
+
+
+    // Best score
+
+    let best =
+    localStorage.getItem(
+        "wifiUmbrellaBest"
+    ) || 0;
+
+
+    if(score > best) {
+
+        localStorage.setItem(
+            "wifiUmbrellaBest",
+            score
+        );
+
+    }
+
+}
+
+
+// ======================================
+// RESTART
+// ======================================
+
+function restartGame() {
+
+    location.reload();
+
+}
+
+
+// ======================================
+// MAIN GAME LOOP
+// ======================================
+
+function gameLoop() {
+
+    if(!gameRunning)
+        return;
+
+
+    movePlayer();
+
+
+    rainTimer++;
+
+
+    if(rainTimer >= rainInterval) {
+
+        createRain();
+
+        rainTimer = 0;
+
+    }
+
+
+    updateRain();
+
+
+    rainAlarm();
+
+
+    lightningFlash();
+
+
+    scoreText.innerHTML =
+    score;
+
+
+    requestAnimationFrame(
+        gameLoop
+    );
+
+}
+
+
+// ======================================
+// BEST SCORE
+// ======================================
+
+let best =
+localStorage.getItem(
+    "wifiUmbrellaBest"
+) || 0;
+
+
+document.getElementById(
+    "best"
+).innerHTML = best;
+
+
+// ======================================
+// START
+// ======================================
+
+gameLoop();
 
 </script>
 
 </body>
 </html>
+```
