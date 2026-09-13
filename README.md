@@ -45,10 +45,10 @@ For Software:
 6. Game Interaction:The player uses the arrow keys to move the character and search for hidden Wi-Fi signals.
 7. Testing:The completed game is run in a web browser and tested by moving the character toward and away from different signal zones.
 # Installation
-[commands]
+no installation required
 
 # Run
-[commands]
+open index.html in a web
 
 ### Project Documentation
 For Software:
