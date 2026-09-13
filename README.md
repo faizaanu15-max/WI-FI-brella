@@ -25,18 +25,25 @@
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- Languages used: html,css,javascript
+- Frameworks used:none
+- Libraries used:none
+- Tools used: Visual Studio code, web browser(chrome)
 
 For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+- List main components: Umbrella 
+- List specifications: normal umbrella used as physical prototype 
+- List tools required: Laptop 
 
 ### Implementation
 For Software:
+1. Game Interface:HTML is used to create the game structure, character, umbrella, buttons, score and signal display.
+2. Game Design:CSS is used to design the character, umbrella, background, Wi-Fi zones and overall game interface.
+3. Game Logic:JavaScript is used to control character movement, signal detection, scoring and game timing.
+4. Signal Detection:Different Wi-Fi signal levels are simulated according to the distance between the character and the hidden signal zones.
+5. Voice Response:JavaScript’s Speech Synthesis API is used to make the umbrella give funny voice responses.
+6. Game Interaction:The player uses the arrow keys to move the character and search for hidden Wi-Fi signals.
+7. Testing:The completed game is run in a web browser and tested by moving the character toward and away from different signal zones.
 # Installation
 [commands]
 
